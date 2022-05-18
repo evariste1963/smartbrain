@@ -16,7 +16,7 @@ const Particle = () => {
       init={particlesInit}
       loaded={particlesLoaded}
       options={{
-        fpsLimit: 120,
+        fpsLimit: 30,
         interactivity: {
           events: {
             onClick: {
@@ -24,7 +24,7 @@ const Particle = () => {
               mode: "push",
             },
             onHover: {
-              enable: true,
+              enable: false,
               mode: "repulse",
             },
             resize: true,
@@ -45,7 +45,7 @@ const Particle = () => {
           },
           links: {
             color: "#ffffff",
-            distance: 150,
+            distance: 200,
             enable: true,
             opacity: 0.5,
             width: 1,
@@ -60,7 +60,7 @@ const Particle = () => {
               default: "bounce",
             },
             random: false,
-            speed: 4,
+            speed: 1,
             straight: false,
           },
           number: {
