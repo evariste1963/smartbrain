@@ -1,4 +1,13 @@
 .Tilt {
   background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
+  border-radius: 15px;
 }
 
+.tag{
+  font-style: italic;
+  font-family: 'ink free';
+  font-weight: 600;
+  color:#510d43;
+  margin: 0;
+  padding-bottom: 2px;
+}
