@@ -3,16 +3,16 @@ import Particles from "react-tsparticles";
 import "./Particle.css";
 
 const Particle = () => {
-  const particlesInit = main => {
+  const particlesInit = (main) => {
     // console.log(main);
   };
 
-  const particlesLoaded = container => {
+  const particlesLoaded = (container) => {
     //console.log(container);
   };
   return (
     <Particles
-      id='tsparticles'
+      id="tsparticles"
       init={particlesInit}
       loaded={particlesLoaded}
       options={{
@@ -41,10 +41,10 @@ const Particle = () => {
         },
         particles: {
           color: {
-            value: "#fefefe",
+            value: "#dddddd",
           },
           links: {
-            color: "#fefefe",
+            color: "#dddddd",
             distance: 200,
             enable: true,
             opacity: 0.5,
@@ -77,7 +77,7 @@ const Particle = () => {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 2 },
           },
         },
         detectRetina: true,
