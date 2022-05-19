@@ -13,7 +13,11 @@ const Logo = () => {
         style={{ height: 160, width: 160 }}
       >
         <div className='Tilt-inner pa3'>
-          <img style={{ paddingTop: "5px" }} alt='logo' src={Brain} />
+          <img
+            style={{ paddingTop: "5px", height: 95, width: 95 }}
+            alt='logo'
+            src={Brain}
+          />
           <h3 className='tag'>this.me</h3>
         </div>
       </Tilt>
