@@ -3,16 +3,16 @@ import Particles from "react-tsparticles";
 import "./Particle.css";
 
 const Particle = () => {
-  const particlesInit = (main) => {
-    console.log(main);
+  const particlesInit = main => {
+    // console.log(main);
   };
 
-  const particlesLoaded = (container) => {
-    console.log(container);
+  const particlesLoaded = container => {
+    //console.log(container);
   };
   return (
     <Particles
-      id="tsparticles"
+      id='tsparticles'
       init={particlesInit}
       loaded={particlesLoaded}
       options={{
