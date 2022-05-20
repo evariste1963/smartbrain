@@ -20,12 +20,12 @@ class App extends Component {
     };
   }
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     console.log(event.target.value);
   };
 
   onButtonSubmit = () => {
-    this.setState({ imageUrl: this.state.input });
+    //this.setState({ imageUrl: this.state.input });
     app.models
       .predict(
         // HEADS UP! Sometimes the Clarifai Models can be down or not working as they are constantly getting updated.
@@ -37,12 +37,14 @@ class App extends Component {
         // .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
         // to:
         // .predict('53e1df302c079b3db8a0a36033ed2d15', this.state.input)
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input
+        //Clarifai.FACE_DETECT_MODEL,
+        "53e1df302c079b3db8a0a36033ed2d15",
+        "https://samples.clarifai.com/face-det.jpg"
+        //this.state.input
       )
-      .then((response) => {
+      .then(response => {
         console.log("hi", response);
-        if (response) {
+        /*if (response) {
           fetch("http://localhost:3000/image", {
             method: "put",
             headers: { "Content-Type": "application/json" },
@@ -55,14 +57,14 @@ class App extends Component {
               this.setState(Object.assign(this.state.user, { entries: count }));
             });
         }
-        this.displayFaceBox(this.calculateFaceLocation(response));
+        this.displayFaceBox(this.calculateFaceLocation(response));*/
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation />
         <Logo />
