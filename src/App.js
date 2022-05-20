@@ -20,7 +20,7 @@ class App extends Component {
     };
   }
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     console.log(event.target.value);
   };
 
@@ -38,11 +38,11 @@ class App extends Component {
         // to:
         // .predict('53e1df302c079b3db8a0a36033ed2d15', this.state.input)
         //Clarifai.FACE_DETECT_MODEL,
-        "53e1df302c079b3db8a0a36033ed2d15",
-        "https://samples.clarifai.com/face-det.jpg"
+        Clarifai.COLOR_MODEL,
+        "https://static.depositphotos.com//storage/9887/file_upload/item_274179262_c6bf38276fd7e0a2cc06f51ca6ffaf72.jpg?1651162137"
         //this.state.input
       )
-      .then(response => {
+      .then((response) => {
         console.log("hi", response);
         /*if (response) {
           fetch("http://localhost:3000/image", {
@@ -59,12 +59,12 @@ class App extends Component {
         }
         this.displayFaceBox(this.calculateFaceLocation(response));*/
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Particle />
         <Navigation />
         <Logo />
