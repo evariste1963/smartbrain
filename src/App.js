@@ -6,7 +6,10 @@ import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Rank from "./components/Rank/Rank";
+
+//test image: https://i2-prod.mirror.co.uk/incoming/article14334083.ece/ALTERNATES/s1200d/3_Beautiful-girl-with-a-gentle-smile.jpg
 
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
@@ -17,33 +20,23 @@ class App extends Component {
     super();
     this.state = {
       input: "",
+      imageUrl:
+        "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
     };
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({ input: event.target.value });
   };
 
   onButtonSubmit = () => {
-    //this.setState({ imageUrl: this.state.input });
+    this.setState({ imageUrl: this.state.input });
     app.models
-      .predict(
-        // HEADS UP! Sometimes the Clarifai Models can be down or not working as they are constantly getting updated.
-        // A good way to check if the model you are using is up, is to check them on the clarifai website. For example,
-        // for the Face Detect Mode: https://www.clarifai.com/models/face-detection
-        // If that isn't working, then that means you will have to wait until their servers are back up. Another solution
-        // is to use a different version of their model that works like the ones found here: https://github.com/Clarifai/clarifai-javascript/blob/master/src/index.js
-        // so you would change from:
-        // .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-        // to:
-        // .predict('53e1df302c079b3db8a0a36033ed2d15', this.state.input)
-        //Clarifai.FACE_DETECT_MODEL,
-        Clarifai.COLOR_MODEL,
-        "https://static.depositphotos.com//storage/9887/file_upload/item_274179262_c6bf38276fd7e0a2cc06f51ca6ffaf72.jpg?1651162137"
-        //this.state.input
-      )
+      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then((response) => {
-        console.log("hi", response);
+        console.log(
+          response.outputs[0].data.regions[0].region_info.bounding_box
+        );
         /*if (response) {
           fetch("http://localhost:3000/image", {
             method: "put",
@@ -73,7 +66,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        {/*<FaceRecognition />*/}
+        {<FaceRecognition imageUrl={this.state.imageUrl} />}
       </div>
     );
   }
