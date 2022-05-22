@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import Signin from "./components/Signin/Signin";
 import Rank from "./components/Rank/Rank";
 
 //test image: https://i2-prod.mirror.co.uk/incoming/article14334083.ece/ALTERNATES/s1200d/3_Beautiful-girl-with-a-gentle-smile.jpg
@@ -25,12 +26,13 @@ class App extends Component {
       imageUrl:
         "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
       box: {},
+      route: "Signin",
     };
   }
 
-  calculateFaceLocation = (data) => {
+  calculateFaceLocation = (response) => {
     const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
+      response.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
@@ -43,7 +45,6 @@ class App extends Component {
   };
 
   displayFaceBox = (box) => {
-    console.log(box);
     this.setState({ box: box });
   };
 
@@ -61,18 +62,31 @@ class App extends Component {
       .catch((err) => console.log(err));
   };
 
+  onRouteChange = (route) => {
+    this.setState({ route: route });
+  };
+
   render() {
     return (
       <div className="App">
         <Particle />
-        <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+        <Navigation onRouteChange={this.onRouteChange} />
+        {this.state.route === "Signin" ? (
+          <Signin onRouteChange={this.onRouteChange} />
+        ) : (
+          <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <FaceRecognition
+              box={this.state.box}
+              imageUrl={this.state.imageUrl}
+            />
+          </div>
+        )}
       </div>
     );
   }
