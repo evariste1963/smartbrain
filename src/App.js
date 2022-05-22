@@ -26,28 +26,40 @@ class App extends Component {
       input: "",
       imageUrl:
         "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
-      box: {},
+      box: [],
       route: "signin",
       isSignedIn: false,
     };
   }
 
   calculateFaceLocation = (response) => {
-    const clarifaiFace =
-      response.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById("inputImage");
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
-    };
+    console.log(this.state.box);
+    let image = document.getElementById("inputImage");
+    let width = Number(image.width);
+    let height = Number(image.height);
+    response.outputs[0].data.regions.forEach((region) => {
+      let clarifaiFace = region.region_info.bounding_box;
+
+      //response.outputs[0].data.regions[0].region_info.bounding_box;
+
+      let facebox = {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - clarifaiFace.right_col * width,
+        bottomRow: height - clarifaiFace.bottom_row * height,
+      };
+      this.setState({ box: [...this.state.box, facebox] });
+
+      // this.setState({
+      //   box: this.state.box.concat(facebox),
+      // });
+      console.log("setState", this.state.box);
+    });
   };
 
   displayFaceBox = (box) => {
-    this.setState({ box: box });
+    // this.setState({ box: box });
+    console.log(box);
   };
 
   onInputChange = (event) => {
@@ -58,9 +70,10 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) =>
-        this.displayFaceBox(this.calculateFaceLocation(response))
-      )
+      .then((response) => {
+        console.log(response);
+        this.displayFaceBox(this.calculateFaceLocation(response));
+      })
       .catch((err) => console.log(err));
   };
 
