@@ -31,7 +31,7 @@ class App extends Component {
       isSignedIn: false,
     };
   }
-
+  /*
   calculateFaceLocation = response => {
     console.log(this.state.box);
     let image = document.getElementById("inputImage");
@@ -56,12 +56,35 @@ class App extends Component {
       //return this.setState({ box: [...this.state.box, [facebox]] });
     });
   };
+*/
+  calculateFaceLocation = response => {
+    let width;
+    let height;
+    let clarifaiFace;
+    response.outputs[0].data.regions.forEach(function differentfaces(item) {
+      clarifaiFace = item.region_info.bounding_box;
+      const image = document.getElementById("inputImage");
+      width = Number(image.width);
+      height = Number(image.height);
+    });
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - clarifaiFace.right_col * width,
+      bottomRow: height - clarifaiFace.bottom_row * height,
+    };
+  };
 
+  displayFaceBox = box => {
+    this.setState({ box: box });
+    console.log(this.state.box);
+  };
+  /*
   displayFaceBox = faceLoc => {
     // this.setState({ box: box });
     console.log(faceLoc);
   };
-
+*/
   onInputChange = event => {
     this.setState({ input: event.target.value });
   };
