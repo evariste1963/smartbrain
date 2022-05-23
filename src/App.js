@@ -31,15 +31,16 @@ class App extends Component {
       isSignedIn: false,
     };
   }
-  /*
+
   calculateFaceLocation = response => {
     console.log(this.state.box);
     let image = document.getElementById("inputImage");
     let width = Number(image.width);
     let height = Number(image.height);
-    response.outputs[0].data.regions.forEach(region => {
-      let clarifaiFace = region.region_info.bounding_box;
-
+    let test = response.outputs[0].data.regions;
+    let test1 = test.map(reg => {
+      let clarifaiFace = reg.region_info.bounding_box;
+      console.log("box", clarifaiFace);
       //response.outputs[0].data.regions[0].region_info.bounding_box;
 
       let facebox = {
@@ -48,15 +49,16 @@ class App extends Component {
         rightCol: width - clarifaiFace.right_col * width,
         bottomRow: height - clarifaiFace.bottom_row * height,
       };
-      this.setState({ box: [...this.state.box, [facebox]] });
+      this.setState({ box: [...this.state.box, [clarifaiFace]] });
       // this.setState({
       //   box: this.state.box.concat(facebox),
       // });
-      console.log(this.setState({ box: [...this.state.box, [facebox]] }));
-      //return this.setState({ box: [...this.state.box, [facebox]] });
+      //console.log(this.setState({ box: [...this.state.box, [facebox]] }));
+      //this.setState({ box: [...this.state.box, [facebox]] });
     });
+    console.log(this.state.box);
   };
-*/
+  /*
   calculateFaceLocation = response => {
     let width;
     let height;
@@ -77,14 +79,14 @@ class App extends Component {
 
   displayFaceBox = box => {
     this.setState({ box: box });
-    console.log(this.state.box);
-  };
-  /*
+    
+  };*/
+
   displayFaceBox = faceLoc => {
     // this.setState({ box: box });
     console.log(faceLoc);
   };
-*/
+
   onInputChange = event => {
     this.setState({ input: event.target.value });
   };
