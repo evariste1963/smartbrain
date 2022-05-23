@@ -31,11 +31,11 @@ class App extends Component {
     };
   }
 
-  calculateFaceLocation = response => {
+  calculateFaceLocation = (response) => {
     let image = document.getElementById("inputImage");
     let width = Number(image.width);
     let height = Number(image.height);
-    response.outputs[0].data.regions.map((reg, i) => {
+    response.outputs[0].data.regions.forEach((reg, i) => {
       let clarifaiFace = reg.region_info.bounding_box;
       let facebox = {
         leftCol: clarifaiFace.left_col * width,
@@ -44,19 +44,24 @@ class App extends Component {
         bottomRow: height - clarifaiFace.bottom_row * height,
       };
 
-      this.state.box.push(facebox);
-
-      return clarifaiFace;
+      console.log(facebox);
+      this.setState({ box: facebox });
+      //this.state.box.push(facebox);
+      //return ""; //this.setState({ box: facebox });
+      //return this.state.box.push(facebox);
+      //return clarifaiFace;
     });
-    console.log(this.state.box);
+    // console.log(this.state.box);
+    //let tsb = this.state.box;
+    //if (tsb.length > 0) tsb.forEach((bx) => this.setState({ fb: bx }));
   };
-  /*
-  displayFaceBox = faceLoc => {
-    //this.setState({ box: faceLoc });
-    console.log(faceLoc);
-  };*/
 
-  onInputChange = event => {
+  // displayFaceBox = (faceLoc) => {
+  //   this.setState({ box: faceLoc });
+  //   console.log(this.state.box);
+  // };
+
+  onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
 
@@ -65,14 +70,14 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then(response => {
+      .then((response) => {
         console.log(response);
         this.calculateFaceLocation(response);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  onRouteChange = route => {
+  onRouteChange = (route) => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
     } else if (route === "home") {
@@ -84,7 +89,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, box, imageUrl } = this.state;
     return (
-      <div className='App'>
+      <div className="App">
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
