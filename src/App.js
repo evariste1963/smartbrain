@@ -38,9 +38,9 @@ class App extends Component {
     let width = Number(image.width);
     let height = Number(image.height);
     let test = response.outputs[0].data.regions;
-    let test1 = test.map(reg => {
+    let test1 = test.map((reg, i) => {
       let clarifaiFace = reg.region_info.bounding_box;
-      console.log("box", clarifaiFace);
+      console.log("box", i + 1, clarifaiFace);
       //response.outputs[0].data.regions[0].region_info.bounding_box;
 
       let facebox = {
@@ -49,14 +49,16 @@ class App extends Component {
         rightCol: width - clarifaiFace.right_col * width,
         bottomRow: height - clarifaiFace.bottom_row * height,
       };
-      this.setState({ box: [...this.state.box, [clarifaiFace]] });
+      // this.setState({ box: [...this.state.box, test1] });
+      return facebox;
       // this.setState({
       //   box: this.state.box.concat(facebox),
       // });
       //console.log(this.setState({ box: [...this.state.box, [facebox]] }));
       //this.setState({ box: [...this.state.box, [facebox]] });
     });
-    console.log(this.state.box);
+    this.setState({ box: [...this.state.box, test1] });
+    console.log(this.state.box, test1);
   };
   /*
   calculateFaceLocation = response => {
