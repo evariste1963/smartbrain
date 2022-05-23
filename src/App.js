@@ -14,7 +14,6 @@ import Rank from "./components/Rank/Rank";
 //test image: https://i2-prod.mirror.co.uk/incoming/article14334083.ece/ALTERNATES/s1200d/3_Beautiful-girl-with-a-gentle-smile.jpg
 //https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/evolution-faces-631.jpg
 //https://cdn.vox-cdn.com/thumbor/CMJs1AJyAmf27RUd2UI5WBSZpy4=/0x0:3049x2048/920x613/filters:focal(1333x1562:1819x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63058104/fake_ai_faces.0.png
-
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
 });
@@ -33,73 +32,43 @@ class App extends Component {
   }
 
   calculateFaceLocation = response => {
-    console.log(this.state.box);
     let image = document.getElementById("inputImage");
     let width = Number(image.width);
     let height = Number(image.height);
-    let test = response.outputs[0].data.regions;
-    let test1 = test.map((reg, i) => {
+    response.outputs[0].data.regions.map((reg, i) => {
       let clarifaiFace = reg.region_info.bounding_box;
-      console.log("box", i + 1, clarifaiFace);
-      //response.outputs[0].data.regions[0].region_info.bounding_box;
-
       let facebox = {
         leftCol: clarifaiFace.left_col * width,
         topRow: clarifaiFace.top_row * height,
         rightCol: width - clarifaiFace.right_col * width,
         bottomRow: height - clarifaiFace.bottom_row * height,
       };
-      // this.setState({ box: [...this.state.box, test1] });
-      return facebox;
-      // this.setState({
-      //   box: this.state.box.concat(facebox),
-      // });
-      //console.log(this.setState({ box: [...this.state.box, [facebox]] }));
-      //this.setState({ box: [...this.state.box, [facebox]] });
+
+      this.state.box.push(facebox);
+
+      return clarifaiFace;
     });
-    this.setState({ box: [...this.state.box, test1] });
-    console.log(this.state.box, test1);
+    console.log(this.state.box);
   };
+
   /*
-  calculateFaceLocation = response => {
-    let width;
-    let height;
-    let clarifaiFace;
-    response.outputs[0].data.regions.forEach(function differentfaces(item) {
-      clarifaiFace = item.region_info.bounding_box;
-      const image = document.getElementById("inputImage");
-      width = Number(image.width);
-      height = Number(image.height);
-    });
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
-    };
-  };
-
-  displayFaceBox = box => {
-    this.setState({ box: box });
-    
-  };*/
-
   displayFaceBox = faceLoc => {
     // this.setState({ box: box });
     console.log(faceLoc);
   };
-
+*/
   onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
   onButtonSubmit = () => {
+    this.setState({ box: [] });
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then(response => {
         console.log(response);
-        this.displayFaceBox(this.calculateFaceLocation(response));
+        this.calculateFaceLocation(response);
       })
       .catch(err => console.log(err));
   };
