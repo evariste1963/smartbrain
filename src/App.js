@@ -32,12 +32,12 @@ class App extends Component {
     };
   }
 
-  calculateFaceLocation = (response) => {
+  calculateFaceLocation = response => {
     console.log(this.state.box);
     let image = document.getElementById("inputImage");
     let width = Number(image.width);
     let height = Number(image.height);
-    response.outputs[0].data.regions.forEach((region) => {
+    response.outputs[0].data.regions.forEach(region => {
       let clarifaiFace = region.region_info.bounding_box;
 
       //response.outputs[0].data.regions[0].region_info.bounding_box;
@@ -48,21 +48,21 @@ class App extends Component {
         rightCol: width - clarifaiFace.right_col * width,
         bottomRow: height - clarifaiFace.bottom_row * height,
       };
-      this.setState({ box: [...this.state.box, facebox] });
-
+      this.setState({ box: [...this.state.box, [facebox]] });
       // this.setState({
       //   box: this.state.box.concat(facebox),
       // });
-      console.log("setState", this.state.box);
+      console.log(this.setState({ box: [...this.state.box, [facebox]] }));
+      //return this.setState({ box: [...this.state.box, [facebox]] });
     });
   };
 
-  displayFaceBox = (box) => {
+  displayFaceBox = faceLoc => {
     // this.setState({ box: box });
-    console.log(box);
+    console.log(faceLoc);
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
@@ -70,14 +70,14 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
     } else if (route === "home") {
@@ -89,7 +89,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, box, imageUrl } = this.state;
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
