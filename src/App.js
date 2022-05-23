@@ -50,13 +50,12 @@ class App extends Component {
     });
     console.log(this.state.box);
   };
-
   /*
   displayFaceBox = faceLoc => {
-    // this.setState({ box: box });
+    //this.setState({ box: faceLoc });
     console.log(faceLoc);
-  };
-*/
+  };*/
+
   onInputChange = event => {
     this.setState({ input: event.target.value });
   };
