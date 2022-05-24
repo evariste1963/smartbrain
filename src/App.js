@@ -25,7 +25,7 @@ class App extends Component {
       input: "",
       imageUrl:
         "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
-      box: {},
+      box: [],
       route: "signin",
       isSignedIn: false,
     };
@@ -45,9 +45,9 @@ class App extends Component {
       };
 
       console.log(facebox);
-      this.setState({ box: facebox });
+      //this.setState({ box: facebox });
       // console.log(this.state.box);
-      //this.state.box.push(facebox);
+      this.state.box.push(facebox);
       //return ""; //this.setState({ box: facebox });
       //return this.state.box.push(facebox);
       //return clarifaiFace;
@@ -67,7 +67,7 @@ class App extends Component {
   };
 
   onButtonSubmit = () => {
-    this.setState({ box: {} });
+    this.setState({ box: [] });
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
