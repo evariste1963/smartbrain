@@ -12,22 +12,25 @@ faceRecognition
 length: 6
 [[Prototype]]: Array(0)
 */
+
+//forEach as below
+//https://discuss.codecademy.com/t/can-i-use-foreach-to-create-a-list-of-jsx-elements/404799
 const FaceRecognition = ({ imageUrl, box }) => {
   console.log("faceRecognition", box);
 
   return (
-    <div className="center ma">
-      <div className="absolute mt2">
+    <div className='center ma'>
+      <div className='absolute mt2'>
         <img
-          id="inputImage"
+          id='inputImage'
           src={imageUrl}
-          alt="img"
-          width="500px"
-          height="auto"
+          alt='img'
+          width='500px'
+          height='auto'
         />
 
         <div
-          className="bounding-Box"
+          className='bounding-Box'
           style={{
             top: box.topRow,
             right: box.rightCol,

@@ -25,13 +25,13 @@ class App extends Component {
       input: "",
       imageUrl:
         "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
-      box: [],
+      box: {},
       route: "signin",
       isSignedIn: false,
     };
   }
 
-  calculateFaceLocation = (response) => {
+  calculateFaceLocation = response => {
     let image = document.getElementById("inputImage");
     let width = Number(image.width);
     let height = Number(image.height);
@@ -46,6 +46,7 @@ class App extends Component {
 
       console.log(facebox);
       this.setState({ box: facebox });
+      // console.log(this.state.box);
       //this.state.box.push(facebox);
       //return ""; //this.setState({ box: facebox });
       //return this.state.box.push(facebox);
@@ -61,23 +62,23 @@ class App extends Component {
   //   console.log(this.state.box);
   // };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
   onButtonSubmit = () => {
-    this.setState({ box: [] });
+    this.setState({ box: {} });
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         this.calculateFaceLocation(response);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
     } else if (route === "home") {
@@ -89,7 +90,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, box, imageUrl } = this.state;
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
