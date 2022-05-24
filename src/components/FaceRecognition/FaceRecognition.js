@@ -15,6 +15,30 @@ length: 6
 
 //forEach as below
 //https://discuss.codecademy.com/t/can-i-use-foreach-to-create-a-list-of-jsx-elements/404799
+
+//also:
+/*What you need is to map your array of objects and remember that every item will be an object, so that you will use for instance dot notation to take the values of the object.
+
+In your component
+
+[
+   {
+       name: 'Sam',
+       email: 'somewhere@gmail.com'
+   },
+
+   {
+       name: 'Ash',
+       email: 'something@gmail.com'
+   }
+].map((anObjectMapped, index) => {
+   return (
+       <p key={`${anObjectMapped.name}_{anObjectMapped.email}`}>
+           {anObjectMapped.name} - {anObjectMapped.email}
+       </p>
+   );
+})*/
+
 const FaceRecognition = ({ imageUrl, box }) => {
   console.log("faceRecognition", box);
 
