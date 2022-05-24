@@ -2,10 +2,9 @@ import React from "react";
 import "./FaceRecognition.css";
 
 const FaceRecognition = ({ imageUrl, boxes }) => {
-  console.log(boxes);
   return (
-    <div className='center ma'>
-      <div className='absolute mt2'>
+    <div className='center ma pa2'>
+      <div style={{ position: "relative" }}>
         <img
           id='inputImage'
           src={imageUrl}
@@ -13,13 +12,13 @@ const FaceRecognition = ({ imageUrl, boxes }) => {
           width='500px'
           height='auto'
         />
-        {boxes.forEach((box, i) => {
+        {boxes.map((box, i) => {
           const { topRow, rightCol, bottomRow, leftCol } = box;
           return (
             <div
               key={i}
               id='face'
-              className='bounding-box'
+              className='bounding-Box'
               style={{
                 top: topRow,
                 right: rightCol,
