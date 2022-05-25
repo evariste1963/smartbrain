@@ -13,9 +13,6 @@ import Rank from "./components/Rank/Rank";
 //test image: https://i2-prod.mirror.co.uk/incoming/article14334083.ece/ALTERNATES/s1200d/3_Beautiful-girl-with-a-gentle-smile.jpg
 //https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/evolution-faces-631.jpg
 //https://cdn.vox-cdn.com/thumbor/CMJs1AJyAmf27RUd2UI5WBSZpy4=/0x0:3049x2048/920x613/filters:focal(1333x1562:1819x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63058104/fake_ai_faces.0.png
-//https://i.cbc.ca/1.5807150.1605732785!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/faces.jpg
-//https://www.brianhonigman.com/wp-content/uploads/2015/10/Large-crowd-of-people-014-300x180.jpg
-//https://news.liverpool.ac.uk/wp-content/uploads/2020/03/SmartphoneUse-1w.jpg
 
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
