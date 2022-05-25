@@ -14,6 +14,7 @@ import Rank from "./components/Rank/Rank";
 //https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/evolution-faces-631.jpg
 //https://cdn.vox-cdn.com/thumbor/CMJs1AJyAmf27RUd2UI5WBSZpy4=/0x0:3049x2048/920x613/filters:focal(1333x1562:1819x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63058104/fake_ai_faces.0.png
 //https://i.cbc.ca/1.5807150.1605732785!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/faces.jpg
+//https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg
 
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
@@ -35,7 +36,7 @@ class App extends Component {
   calculateFaceLocation = response => {
     const clarifaiFaces = response.outputs[0].data.regions.map(
       region => region.region_info.bounding_box
-    );
+    ); //returns an array of objects -- bounding_box %'s
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
@@ -45,12 +46,12 @@ class App extends Component {
         topRow: face.top_row * height,
         rightCol: width - face.right_col * width,
         bottomRow: height - face.bottom_row * height,
-      };
+      }; //returns an array of box positions
     });
   };
 
   displayFaceBox = boxes => {
-    this.setState({ boxes: boxes });
+    this.setState({ boxes: boxes }); //boxes = returned array of boxes above -- sets state.boxes
   };
 
   onInputChange = event => {
