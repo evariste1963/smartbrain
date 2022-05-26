@@ -24,7 +24,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      input: "",
+      input: "enter an image url",
       imageUrl:
         "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
       boxes: [],
@@ -66,6 +66,7 @@ class App extends Component {
         this.displayFaceBox(this.calculateFaceLocation(response))
       )
       .catch(err => console.log(err));
+    document.querySelector("input").value = "";
   };
 
   onRouteChange = route => {
