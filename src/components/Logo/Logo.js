@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <div className="ma1 mt0 ml5">
       <Tilt
-        className="Tilt shadow"
+        className="Tilt shadow absolute"
         tiltMaxAngleX={30}
         tiltMaxAngleY={30}
         tiltReverse={true}

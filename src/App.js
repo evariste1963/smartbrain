@@ -15,6 +15,7 @@ import Rank from "./components/Rank/Rank";
 //https://cdn.vox-cdn.com/thumbor/CMJs1AJyAmf27RUd2UI5WBSZpy4=/0x0:3049x2048/920x613/filters:focal(1333x1562:1819x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63058104/fake_ai_faces.0.png
 //https://i.cbc.ca/1.5807150.1605732785!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/faces.jpg
 //https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg
+//https://i.dailymail.co.uk/i/pix/2014/06/06/article-2650654-1E86888000000578-350_634x388.jpg
 
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
@@ -33,14 +34,14 @@ class App extends Component {
     };
   }
 
-  calculateFaceLocation = response => {
+  calculateFaceLocation = (response) => {
     const clarifaiFaces = response.outputs[0].data.regions.map(
-      region => region.region_info.bounding_box
+      (region) => region.region_info.bounding_box
     ); //returns an array of objects -- bounding_box %'s
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
-    return clarifaiFaces.map(face => {
+    return clarifaiFaces.map((face) => {
       return {
         leftCol: face.left_col * width,
         topRow: face.top_row * height,
@@ -50,11 +51,11 @@ class App extends Component {
     });
   };
 
-  displayFaceBox = boxes => {
+  displayFaceBox = (boxes) => {
     this.setState({ boxes: boxes }); //boxes = returned array of boxes above -- sets state.boxes
   };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
 
@@ -62,14 +63,14 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then(response =>
+      .then((response) =>
         this.displayFaceBox(this.calculateFaceLocation(response))
       )
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
     document.querySelector("input").value = "";
   };
 
-  onRouteChange = route => {
+  onRouteChange = (route) => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
     } else if (route === "home") {
@@ -81,7 +82,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, boxes, imageUrl } = this.state;
     return (
-      <div className='App'>
+      <div className="App">
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
@@ -89,8 +90,10 @@ class App extends Component {
         />
         {route === "home" ? (
           <div>
-            <Logo />
-            <Rank />
+            <div>
+              <Logo className="inline" />
+              <Rank />
+            </div>
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}

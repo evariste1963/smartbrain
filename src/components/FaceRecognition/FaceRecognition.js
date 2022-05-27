@@ -3,22 +3,22 @@ import "./FaceRecognition.css";
 
 const FaceRecognition = ({ imageUrl, boxes }) => {
   return (
-    <div className='center ma pa2'>
+    <div className="center ma pa2">
       <div style={{ position: "relative" }}>
         <img
-          id='inputImage'
+          id="inputImage"
           src={imageUrl}
-          alt='img'
-          width='500px'
-          height='auto'
+          alt="img"
+          width="800px"
+          height="auto"
         />
         {boxes.map((box, i) => {
           const { topRow, rightCol, bottomRow, leftCol } = box;
           return (
             <div
               key={i}
-              id='face'
-              className='bounding-Box'
+              id="face"
+              className="bounding-Box"
               style={{
                 top: topRow,
                 right: rightCol,
