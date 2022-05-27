@@ -1,7 +1,8 @@
 .Tilt {
   /*background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);*/
   background: linear-gradient(89deg, #eb5b88 0%, #747fde 100%);
-  border-radius: 100%;
+  border-radius: 25%;
+  transform: translateZ(100%);
 }
 
 .tag {
@@ -11,4 +12,14 @@
   color: #510d43;
   margin: 0;
   padding-bottom: 2px;
+}
+
+.Tilt-inner {
+  transform: translateZ(50%);
+  background-color: transparent;
+  transition: transform 0.5s ease-in-out;
+}
+
+.Tilt-inner:hover {
+  transform: scale(1.2) rotate(360deg);
 }

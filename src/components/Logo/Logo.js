@@ -5,20 +5,31 @@ import "./Logo.css";
 
 const Logo = () => {
   return (
-    <div className='ma1 mt0 ml5'>
+    <div className="ma1 mt0 ml5">
       <Tilt
-        className='Tilt shadow'
+        className="Tilt shadow"
         tiltMaxAngleX={30}
         tiltMaxAngleY={30}
-        style={{ height: 180, width: 180 }}
+        tiltReverse={true}
+        perspective={1000}
+        glareEnable={true}
+        glareMaxOpacity={"0.6"}
+        glareBorderRadius={"25%"}
+        glareColor={"white"}
+        glarePosition={"all"}
+        glareReverse={"true"}
+        style={{
+          height: 180,
+          width: 180,
+        }}
       >
-        <div className='Tilt-inner pa3'>
+        <div className="Tilt-inner pa3">
           <img
             style={{ paddingTop: "15px", height: 95, width: 95 }}
-            alt='logo'
+            alt="logo"
             src={Brain}
           />
-          <h3 className='tag'>this.me</h3>
+          <h3 className="tag">this.me</h3>
         </div>
       </Tilt>
     </div>
