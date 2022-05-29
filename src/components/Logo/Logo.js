@@ -25,7 +25,13 @@ const Logo = () => {
       >
         <div className="Tilt-inner pa3">
           <img
-            style={{ paddingTop: "15px", height: 95, width: 95 }}
+            className="Tilt-img"
+            style={{
+              /*paddingTop: "15px",
+              paddingBottom: "15px",*/
+              height: 95,
+              width: 95,
+            }}
             alt="logo"
             src={Brain}
           />

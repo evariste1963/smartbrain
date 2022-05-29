@@ -16,6 +16,10 @@ import Rank from "./components/Rank/Rank";
 //https://i.cbc.ca/1.5807150.1605732785!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/faces.jpg
 //https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg
 //https://i.dailymail.co.uk/i/pix/2014/06/06/article-2650654-1E86888000000578-350_634x388.jpg
+//https://www.photographymad.com/files/images/sprint-start.jpg
+//https://www.photographymad.com/files/images/indoor-volleyball.jpg
+//https://www.photographymad.com/files/images/speed-skaters.jpg
+
 
 const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",

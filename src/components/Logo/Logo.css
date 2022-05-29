@@ -1,25 +1,34 @@
 .Tilt {
-  /*background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(89deg, #eb5b88 0%, #747fde 100%);
   border-radius: 25%;
   transform: translateZ(100%);
+  align-content: center;
 }
 
-.tag {
-  font-style: italic;
-  font-family: "ink free";
-  font-weight: 600;
-  color: #510d43;
-  margin: 0;
-  padding-bottom: 2px;
-}
-
-.Tilt-inner {
+.Tilt-inner,
+.Tilt-img {
+  width: 100%;
   transform: translateZ(50%);
   background-color: transparent;
   transition: transform 0.5s ease-in-out;
 }
 
 .Tilt-inner:hover {
-  transform: scale(1.2) rotate(360deg);
+  transform: scale(1.2);
+}
+
+.Tilt-img:hover {
+  transform: rotate(360deg);
+}
+
+.tag {
+  font-style: italic;
+  font-family: "ink free";
+  font-weight: 650;
+  color: #510d43;
+  margin: 0;
+  padding-bottom: 2px;
 }
