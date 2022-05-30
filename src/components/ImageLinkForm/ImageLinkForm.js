@@ -13,7 +13,9 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
             className='f4 pa2 w-70 center'
             type='tex'
             onChange={onInputChange}
-            placeholder='enter an image url'
+            placeholder='enter an image url...'
+            onFocus={e => (e.target.placeholder = "")}
+            onBlur={e => (e.target.placeholder = "enter an image url...")}
           />
           <button
             className='w-30 grow f4 link ph3 pv2 white bg-light-purple'
