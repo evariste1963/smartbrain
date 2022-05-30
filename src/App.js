@@ -29,8 +29,8 @@ class App extends Component {
     super();
     this.state = {
       input: "enter an image url",
-      imageUrl:
-        "https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
+      imageUrl: "/mo.jpg",
+      //"https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
       boxes: [],
       route: "signin",
       isSignedIn: false,
