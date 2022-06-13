@@ -44,7 +44,7 @@ class App extends Component {
     };
   }
 
-  loadUser = (data) => {
+  loadUser = data => {
     this.setState({
       user: {
         id: data.id,
@@ -56,14 +56,14 @@ class App extends Component {
     });
   };
 
-  calculateFaceLocation = (response) => {
+  calculateFaceLocation = response => {
     const clarifaiFaces = response.outputs[0].data.regions.map(
-      (region) => region.region_info.bounding_box
+      region => region.region_info.bounding_box
     ); //returns an array of objects -- bounding_box %'s
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
-    return clarifaiFaces.map((face) => {
+    return clarifaiFaces.map(face => {
       return {
         leftCol: face.left_col * width,
         topRow: face.top_row * height,
@@ -73,11 +73,11 @@ class App extends Component {
     });
   };
 
-  displayFaceBox = (boxes) => {
+  displayFaceBox = boxes => {
     this.setState({ boxes: boxes }); //boxes = returned array of boxes above -- sets state.boxes
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
@@ -85,14 +85,27 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) =>
-        this.displayFaceBox(this.calculateFaceLocation(response))
-      )
-      .catch((err) => console.log(err));
+      .then(response => {
+        if (response) {
+          fetch("http://localhost:3000/image", {
+            method: "put",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+              id: this.state.user.id,
+            }),
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }));
+            });
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response));
+      })
+      .catch(err => console.log(err));
     document.querySelector("input").value = "";
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === "signout") {
       this.setState({
         isSignedIn: false,
@@ -109,7 +122,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, boxes, imageUrl } = this.state;
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
@@ -118,8 +131,11 @@ class App extends Component {
         {route === "home" ? (
           <div>
             <div>
-              <Logo className="inline" />
-              <Rank />
+              <Logo className='inline' />
+              <Rank
+                name={this.state.user.name}
+                entries={this.state.user.entries}
+              />
             </div>
             <ImageLinkForm
               onInputChange={this.onInputChange}
@@ -128,7 +144,7 @@ class App extends Component {
             <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </div>
         ) : route === "signin" ? (
-          <Signin onRouteChange={this.onRouteChange} />
+          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         ) : (
           <Register
             loadUser={this.loadUser}
