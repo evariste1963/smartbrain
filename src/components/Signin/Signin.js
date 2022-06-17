@@ -1,4 +1,5 @@
 import React from "react";
+import Helper from "../Helper/Helper";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -6,6 +7,7 @@ class Signin extends React.Component {
     this.state = {
       signinEmail: "",
       signinPassword: "",
+      //signinName: "",
     };
   }
   onEmailChange = event => {
@@ -17,7 +19,13 @@ class Signin extends React.Component {
 
   onSubmitSignin = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/signin", {
+    const reg = "signin";
+    const email = this.state.signinEmail;
+    //const name = this.state.signinName;
+    const password = this.state.signinPassword;
+
+    Helper(reg, email, password)
+      /*fetch("http://localhost:3000/signin", {
       method: "post",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
@@ -25,7 +33,7 @@ class Signin extends React.Component {
         password: this.state.signinPassword,
       }),
     })
-      .then(response => response.json())
+      .then(response => response.json())*/
       .then(user => {
         if (user.id) {
           this.props.loadUser(user);

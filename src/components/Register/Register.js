@@ -1,4 +1,5 @@
 import React from "react";
+import Helper from "../Helper/Helper";
 
 class Register extends React.Component {
   constructor(props) {
@@ -23,7 +24,13 @@ class Register extends React.Component {
 
   onSubmitSignin = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/register", {
+    const reg = "register";
+    const email = this.state.email;
+    const name = this.state.name;
+    const password = this.state.password;
+
+    Helper(reg, email, password, name)
+      /* fetch(`http://localhost:3000/${reg}`, {
       method: "post",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
@@ -32,7 +39,7 @@ class Register extends React.Component {
         name: this.state.name,
       }),
     })
-      .then(response => response.json())
+      .then(response => response.json())*/
       .then(user => {
         if (user) {
           this.props.loadUser(user);
