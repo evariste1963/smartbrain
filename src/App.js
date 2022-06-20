@@ -9,6 +9,7 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 import Rank from "./components/Rank/Rank";
+import Helper from "./components/Helper/Helper";
 
 //test image: https://i2-prod.mirror.co.uk/incoming/article14334083.ece/ALTERNATES/s1200d/3_Beautiful-girl-with-a-gentle-smile.jpg
 //https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/evolution-faces-631.jpg
@@ -44,7 +45,7 @@ class App extends Component {
     };
   }
 
-  loadUser = (data) => {
+  loadUser = data => {
     this.setState({
       user: {
         id: data.id,
@@ -56,14 +57,14 @@ class App extends Component {
     });
   };
 
-  calculateFaceLocation = (response) => {
+  calculateFaceLocation = response => {
     const clarifaiFaces = response.outputs[0].data.regions.map(
-      (region) => region.region_info.bounding_box
+      region => region.region_info.bounding_box
     ); //returns an array of objects -- bounding_box %'s
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
-    return clarifaiFaces.map((face) => {
+    return clarifaiFaces.map(face => {
       return {
         leftCol: face.left_col * width,
         topRow: face.top_row * height,
@@ -73,11 +74,11 @@ class App extends Component {
     });
   };
 
-  displayFaceBox = (boxes) => {
+  displayFaceBox = boxes => {
     this.setState({ boxes: boxes }); //boxes = returned array of boxes above -- sets state.boxes
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
@@ -85,27 +86,26 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => {
+      .then(response => {
         if (response) {
-          fetch("http://localhost:3000/image", {
-            method: "put",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-              id: this.state.user.id,
-            }),
-          })
-            .then((response) => response.json())
-            .then((count) => {
-              this.setState(Object.assign(this.state.user, { entries: count }));
-            });
+          const path = "image";
+          const method = "put";
+          const { id } = this.state.user;
+          Helper(path, method, null, null, null, id).then(count => {
+            this.setState(Object.assign(this.state.user, { entries: count }));
+          });
         }
         this.displayFaceBox(this.calculateFaceLocation(response));
+        this.setState({ input: "" });
       })
-      .catch((err) => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.setState({ imageUrl: "/mo.jpg", boxes: [] });
+      });
     document.querySelector("input").value = "";
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === "signout") {
       this.setState({
         isSignedIn: false,
@@ -122,7 +122,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, boxes, imageUrl } = this.state;
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
@@ -131,7 +131,7 @@ class App extends Component {
         {route === "home" ? (
           <div>
             <div>
-              <Logo className="inline" />
+              <Logo className='inline' />
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
