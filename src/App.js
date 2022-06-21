@@ -88,10 +88,10 @@ class App extends Component {
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then(response => {
         if (response) {
-          const path = "image";
+          const route = "image";
           const method = "put";
           const { id } = this.state.user;
-          Helper(path, method, null, null, null, id).then(count => {
+          Helper(route, method, null, null, null, id).then(count => {
             this.setState(Object.assign(this.state.user, { entries: count }));
           });
         }

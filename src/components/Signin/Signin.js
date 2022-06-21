@@ -19,11 +19,11 @@ class Signin extends React.Component {
 
   onSubmitSignin = e => {
     e.preventDefault();
-    const path = "signin";
+    const route = "signin";
     const method = "post";
     const { signinEmail: email, signinPassword: password } = this.state;
 
-    Helper(path, method, email, password).then(user => {
+    Helper(route, method, email, password).then(user => {
       if (user.id) {
         this.props.loadUser(user);
         this.props.onRouteChange("home");

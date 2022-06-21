@@ -24,11 +24,11 @@ class Register extends React.Component {
 
   onSubmitSignin = e => {
     e.preventDefault();
-    const path = "register";
+    const route = "register";
     const method = "post";
     const { email, name, password } = this.state;
 
-    Helper(path, method, email, password, name).then(user => {
+    Helper(route, method, email, password, name).then(user => {
       if (user) {
         this.props.loadUser(user);
         this.props.onRouteChange("home");

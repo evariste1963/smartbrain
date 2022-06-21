@@ -1,5 +1,5 @@
-const Helper = (path, method, email, password, name, id) => {
-  return fetch(`http://localhost:3000/${path}`, {
+const Helper = (route, method, email, password, name, id) => {
+  return fetch(`http://localhost:3000/${route}`, {
     method: method,
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
