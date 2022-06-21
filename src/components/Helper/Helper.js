@@ -1,5 +1,5 @@
-const Helper = (route, method, email, password, name, id) => {
-  return fetch(`http://localhost:3000/${route}`, {
+const Helper = async (route, method, email, password, name, id) => {
+  const response = await fetch(`http://localhost:3000/${route}`, {
     method: method,
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
@@ -8,7 +8,8 @@ const Helper = (route, method, email, password, name, id) => {
       name: name,
       id: id,
     }),
-  }).then(response => response.json());
+  });
+  return await response.json();
 };
 
 export default Helper;

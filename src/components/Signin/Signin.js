@@ -17,18 +17,17 @@ class Signin extends React.Component {
     this.setState({ signinPassword: event.target.value });
   };
 
-  onSubmitSignin = e => {
+  onSubmitSignin = async e => {
     e.preventDefault();
     const route = "signin";
     const method = "post";
     const { signinEmail: email, signinPassword: password } = this.state;
 
-    Helper(route, method, email, password).then(user => {
-      if (user.id) {
-        this.props.loadUser(user);
-        this.props.onRouteChange("home");
-      }
-    });
+    const user = await Helper(route, method, email, password);
+    if (user.id) {
+      this.props.loadUser(user);
+      this.props.onRouteChange("home");
+    }
   };
 
   render() {

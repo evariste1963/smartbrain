@@ -22,18 +22,18 @@ class Register extends React.Component {
     this.setState({ password: event.target.value });
   };
 
-  onSubmitSignin = e => {
+  onSubmitSignin = async e => {
     e.preventDefault();
     const route = "register";
     const method = "post";
     const { email, name, password } = this.state;
 
-    Helper(route, method, email, password, name).then(user => {
-      if (user) {
-        this.props.loadUser(user);
-        this.props.onRouteChange("home");
-      }
-    });
+    const user = await Helper(route, method, email, password, name);
+
+    if (user) {
+      this.props.loadUser(user);
+      this.props.onRouteChange("home");
+    }
   };
 
   render() {
