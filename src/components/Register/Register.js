@@ -30,7 +30,7 @@ class Register extends React.Component {
 
     const user = await Helper(route, method, email, password, name);
 
-    if (user) {
+    if (user.id) {
       this.props.loadUser(user);
       this.props.onRouteChange("home");
     }
