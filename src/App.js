@@ -25,27 +25,28 @@ const app = new Clarifai.App({
   apiKey: "d8a15276d76044ccb4e27a8981a6a548",
 });
 
+const initialState = {
+  input: "enter an image url",
+  imageUrl: "/mo.jpg",
+  //"https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
+  boxes: [],
+  route: "signin",
+  isSignedIn: false,
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: "",
+  },
+};
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: "enter an image url",
-      imageUrl: "/mo.jpg",
-      //"https://content.presspage.com/uploads/1369/1920_stock-photo-mosaic-of-satisfied-people-157248584.jpg",
-      boxes: [],
-      route: "signin",
-      isSignedIn: false,
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        entries: 0,
-        joined: "",
-      },
-    };
+    this.state = initialState;
   }
-
-  loadUser = (data) => {
+  loadUser = data => {
     this.setState({
       user: {
         id: data.id,
@@ -57,14 +58,14 @@ class App extends Component {
     });
   };
 
-  calculateFaceLocation = (response) => {
+  calculateFaceLocation = response => {
     const clarifaiFaces = response.outputs[0].data.regions.map(
-      (region) => region.region_info.bounding_box
+      region => region.region_info.bounding_box
     ); //returns an array of objects -- bounding_box %'s
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
-    return clarifaiFaces.map((face) => {
+    return clarifaiFaces.map(face => {
       return {
         leftCol: face.left_col * width,
         topRow: face.top_row * height,
@@ -74,11 +75,11 @@ class App extends Component {
     });
   };
 
-  displayFaceBox = (boxes) => {
+  displayFaceBox = boxes => {
     this.setState({ boxes: boxes }); //boxes = returned array of boxes above -- sets state.boxes
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
@@ -86,33 +87,28 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => {
+      .then(response => {
         if (response) {
           const route = "image";
           const method = "put";
           const { id } = this.state.user;
-          Helper(route, method, null, null, null, id).then((count) => {
+          Helper(route, method, null, null, null, id).then(count => {
             this.setState(Object.assign(this.state.user, { entries: count }));
           });
         }
         this.displayFaceBox(this.calculateFaceLocation(response));
         this.setState({ input: "" });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         this.setState({ imageUrl: "/mo.jpg", boxes: [] });
       });
     document.querySelector("input").value = "";
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === "signout") {
-      this.setState({
-        isSignedIn: false,
-        imageUrl: "/mo.jpg",
-        input: "enter an image url",
-        boxes: [],
-      });
+      this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
     }
@@ -122,7 +118,7 @@ class App extends Component {
   render() {
     const { isSignedIn, route, boxes, imageUrl } = this.state;
     return (
-      <div className="App">
+      <div className='App'>
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
@@ -131,7 +127,7 @@ class App extends Component {
         {route === "home" ? (
           <div>
             <div>
-              <Logo className="inline" />
+              <Logo className='inline' />
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
