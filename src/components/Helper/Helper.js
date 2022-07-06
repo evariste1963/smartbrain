@@ -12,7 +12,7 @@ const Helper = async (route, method, email, password, name, id) => {
     });
     return await response.json();
   } catch (err) {
-    throw new Error("bugger!", err);
+    throw new Error("zoot alors", err);
   }
 };
 
