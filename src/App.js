@@ -86,7 +86,9 @@ class App extends Component {
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({ input: this.state.input }),
     })
-      .then(response => (response.status === 200 ? response.json() : ""))
+      .then(response =>
+        response.status === 200 ? response.json() : alert("no image entered")
+      )
 
       .then(response => {
         if (response) {
