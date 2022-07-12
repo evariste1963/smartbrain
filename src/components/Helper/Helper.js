@@ -10,6 +10,7 @@ const Helper = async (route, method, email, password, name, id) => {
         id: id,
       }),
     });
+
     return await response.json();
   } catch (err) {
     throw new Error("zoot alors", err);
